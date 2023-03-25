@@ -1,3 +1,11 @@
+
+
+
+
+https://user-images.githubusercontent.com/100999539/227743361-8346c024-a393-4b91-a067-ee34bedefb8e.mp4
+
+
+
 [![Python 3.6](https://img.shields.io/badge/python-3.11-yellow.svg)](https://www.python.org/downloads/release/python-360/)
 ![Django 3.0](https://img.shields.io/badge/Django-3.0-green.svg)
 ![Build](https://github.com/shyam999/Django-ecommerce/workflows/Build/badge.svg?branch=master)
