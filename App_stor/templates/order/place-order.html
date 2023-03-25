@@ -1,0 +1,65 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{%block content%}
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+
+
+<!-- ============================ COMPONENT 2 ================================= -->
+<div class="row">
+		<main class="col-md-8">
+
+<article class="card mb-4">
+<div class="card-body">
+	<h4 class="card-title mb-4">Review cart</h4>
+	<div class="row">
+		
+		{% for item in cart %}
+		<div class="col-md-6">
+			<figure class="itemside  mb-4">
+				<div class="aside"><img src=" {{ item.product.image.url }} " class="border img-sm"></div>
+				<figcaption class="info">
+					<p>{{item.product.name}} </p>
+					<span class="text-muted">{{ item.quantity }}x = ${{ item.total_price }} </span>
+				</figcaption>
+			</figure>
+		</div> <!-- col.// -->
+		{%endfor%}
+		
+	</div> <!-- row.// -->
+</div> <!-- card-body.// -->
+</article> <!-- card.// -->
+
+
+<article class="card mb-4">
+<div class="card-body">
+	<h4 class="card-title mb-4">Contact info</h4>
+	<form method="post" class="order-form">
+			{% csrf_token %}
+			{{ form.as_p }}
+	<input type="submit" value="Place order" class="btn btn-primary btn-block">
+	</form>
+	<br>
+	
+</div> <!-- card-body.// -->
+
+
+<!-- ============================ COMPONENT 2 END//  ================================= -->
+
+
+
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{%endblock%}
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+    
+</body>
+</html>

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block content%}
+
+
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+{% if cart|length == 0 %}
+	<div class="container">
+		<h2 class="text-center">Your cart is empty.</h2>
+		<div class="card">
+			<div class="card-body">
+			<a href="{% url "App_stor:product_list" %}" class="btn btn-primary btn-block"> Continue Shopping </a>
+			</div>
+		</div>
+		
+	</div>
+{%else %}
+<div class="row">
+	<aside class="col-lg-9">
+<div class="card">
+<table class="table table-borderless table-shopping-cart">
+<thead class="text-muted">
+<tr class="small text-uppercase">
+  <th scope="col">Product</th>
+  <th scope="col" width="120">Quantity</th>
+  <th scope="col" width="120">Price</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody>
+
+
+
+{% for item in cart %}
+{% with product=item.product %}
+<tr>
+	<td>
+		<figure class="itemside align-items-center">
+			<div class="aside"><img src= {{ product.image.url }} class="img-sm"></div>
+			<figcaption class="info">
+				<a href="{{ product.get_absolute_url }}" class="title text-dark">>{{ product.name }}</a>
+				{% comment %} <p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p> {% endcomment %}
+			</figcaption>
+		</figure>
+	</td>
+	<td> 
+		<!-- col.// -->
+		<td class="text-right">
+		<div class="col"> 
+	 
+				{% comment %} <var class="price">{{ item.quantity }} </var>  {% endcomment %}
+				<form action="{% url "cart:cart_add" product.id %}" method="post">
+					{{ item.update_quantity_form.quantity }}
+					{{ item.update_quantity_form.override }}
+					<span> 
+					<input class="btn btn-success" type="submit" value="Update">
+
+					</span>
+					{% csrf_token %}
+				</form>
+		</div>
+	</td> <!-- col.// -->
+	</td>
+	<td> 
+		<div class="price-wrap"> 
+			<var class="price">${{ item.total_price }}</var> 
+			<small class="text-muted"> ${{ item.price }} each </small> 
+		</div> <!-- price-wrap .// -->
+	</td>
+	<td class="text-right"> 
+		<form action="{% url "cart:cart_remove" product.id %}" 
+		method="post">
+		<input class="btn btn-danger" type="submit" value="Remove">
+		{% csrf_token %}
+ 	</form>
+	{% comment %} <a href="" class="btn btn-danger"> Remove</a> {% endcomment %}
+	</td>
+</tr>
+
+{% endwith %}
+{%endfor%}
+</tbody>
+</table>
+</div> <!-- card.// -->
+
+	</aside> <!-- col.// -->
+	<aside class="col-lg-3">
+
+		<div class="card">
+		<div class="card-body">
+			<dl class="dlist-align">
+			  <dt>Total price:</dt>
+			  <dd class="text-right">${{ cart.get_total_price }}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Tax:</dt>
+			  <dd class="text-right"> $00.00</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Total:</dt>
+			  <dd class="text-right text-dark b"><strong>${{ cart.get_total_price }}</strong></dd>
+			</dl>
+			<hr>
+			<p class="text-center mb-3">
+				<img src={% static "/images/misc/payments.png"  %} height="26">
+			</p>
+			<a href= "{% url "orders:order_create" %}" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="{% url "App_stor:product_list" %}" class="btn btn-light btn-block">Continue Shopping</a>
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+
+</aside> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+{% endif %}
+{% endblock %}
+</body>
+</html>
